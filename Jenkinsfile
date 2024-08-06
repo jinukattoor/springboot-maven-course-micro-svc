@@ -16,7 +16,7 @@ pipeline{
         }
 		stage('Docker Build') {
             steps {
-        sh 'docker build -t jinudock/spring-petclinic:latest .'
+        sh 'docker build -t jinudock/conimage:latest .'
       }
     }
 	 stage('Docker Push') {
