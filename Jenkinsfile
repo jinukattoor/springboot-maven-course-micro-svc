@@ -6,7 +6,7 @@ pipeline{
     stages{
         stage('checkout the code'){
             steps{
-                git url:'https://github.com/jagdishmodi/springboot-maven-course-micro-svc.git', branch: 'master'
+                git url:'https://github.com/jinukattoor/springboot-maven-course-micro-svc.git', branch: 'master'
             }
         }
         stage('build the code'){
@@ -15,11 +15,20 @@ pipeline{
             }
         }
 		stage('Docker Build') {
-       agent any
-       steps {
-        sh 'docker build -t jinudock/conimage:TestDockerBuild .'
+            steps {
+        sh 'docker build -t jinudock/spring-petclinic:latest .'
       }
     }
+	 stage('Docker Push') {
+		steps {
+		withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) 
+		{
+			sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
+			sh 'docker push jinudock/conimage:latest'
+		}
+	 
+	 }
+		
 }
 }
-
+}
