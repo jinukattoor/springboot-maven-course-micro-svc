@@ -1,3 +1,4 @@
+
 pipeline{
     agent any
     tools{
@@ -14,21 +15,22 @@ pipeline{
                 sh 'mvn clean package'
             }
         }
-		stage('Docker Build') {
+                stage('Docker Build') {
             steps {
         sh 'docker build -t jinudock/conimage:latest .'
       }
     }
-	 stage('Docker Push') {
-		steps {
-		withCredentials([usernamePassword(credentialsId: 'dockeraccess', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) 
-		{
-			sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}" 
-			sh 'docker push jinudock/conimage:latest'
-		}
-	 
-	 }
-		
+         stage('Docker Push') {
+                steps {
+                withCredentials([usernamePassword(credentialsId: 'dockeraccess', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')])
+                {
+                        sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
+                        sh 'docker push jinudock/conimage:latest'
+                }
+
+         }
+
 }
 }
 }
+
