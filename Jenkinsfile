@@ -13,7 +13,7 @@ pipeline{
             steps{
                 sh 'mvn clean package'
             }
-        }I
+        }
 stage("sonar quality check"){
             steps{
                 script{
