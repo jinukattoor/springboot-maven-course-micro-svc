@@ -16,15 +16,15 @@ pipeline{
         }
 		stage('Docker Build') {
             steps {
-        sh 'docker build -t docker.io/jinudock/conimage:latest .'
+        sh 'docker build -t jinudock/conimage:latest .'
       }
     }
 	 stage('Docker Push') {
 		steps {
 		withCredentials([usernamePassword(credentialsId: 'dockeraccess', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) 
 		{
-			sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}" docker.io
-			sh 'docker push docker.io/jinudock/conimage:latest'
+			sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}" 
+			sh 'docker push jinudock/conimage:latest'
 		}
 	 
 	 }
